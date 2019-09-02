@@ -260,6 +260,14 @@ public final class JDBCStatementHelper {
         a.free();
       }
     }
+    
+    if (value.getClass().getName().equals("org.postgresql.util.PGobject")) {
+			if (value.toString().startsWith("["))
+				return new JsonArray(value.toString());
+			else
+				return new JsonObject(value.toString());
+		}
+    
 
     // fallback to String
     return value.toString();
